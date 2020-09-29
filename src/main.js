@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import AsyncComputed from 'vue-async-computed'
+Vue.use(require('vue-moment'));
+Vue.use(require('vue-async-computed'));
 
 Vue.config.productionTip = false
 

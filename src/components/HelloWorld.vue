@@ -1,11 +1,10 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <button @click="getAxios">Axios</button>
     <br>
-    <button @click="getFetch">Fetch</button>
-
-
+    <h4 v-if="user_data.created_at !== undefined">created at : {{ user_data.created_at|format }}</h4>
+    <h4 v-if="user_data.updated_at !== undefined">updated at :
+      {{ user_data.updated_at|moment('dddd, MMMM do YYYY') }}</h4>
   </div>
 </template>
 
@@ -16,6 +15,20 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data() {
+    return {
+      user_data: {},
+    }
+  },
+  mounted() {
+    this.geUserData();
+  },
+  filters: {
+    format: (value) => {
+      let date = new Date(value);
+      return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    },
   },
   methods: {
     getAxios() {
@@ -29,14 +42,15 @@ export default {
             console.log(error);
           })
     },
-    getFetch() {
+    geUserData() {
       fetch('https://api.github.com/users/SarahHayat')
           .then((data) => data.json())
           .then((user) => {
-            console.log(user)
+            this.user_data = user;
           })
     }
   },
+
 }
 
 </script>

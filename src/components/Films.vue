@@ -1,6 +1,6 @@
 <template>
   <div>
-  <button @click="getFilms">FILMS</button>
+    <h1>Liste de Films</h1>
     <ul>
       <li v-for="(film, index) in films" :key="index">
         <b>Title</b> : {{ film.title }}
@@ -17,6 +17,9 @@ export default {
       films: null,
     }
   },
+  mounted() {
+    this.getFilms();
+  },
   methods:{
     getFilms(){
       fetch('https://api-films.herokuapp.com/films')
@@ -25,6 +28,11 @@ export default {
             this.films=film
           })
     }
+  },
+  filters:{
+    currency:(value) =>{
+      return `${value}€`;
+    },
   }
 }
 </script>
